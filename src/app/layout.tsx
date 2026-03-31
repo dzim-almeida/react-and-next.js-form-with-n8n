@@ -16,7 +16,7 @@ export default function RootLayout({
     // A tag HTML principal indicando o idioma
     <html lang="pt-BR">
       {/* O antialiased deixa as fontes mais suaves e bonitas no Windows/Mac */}
-      <body className="antialiased min-h-screen bg-background text-foreground">
+      <body className="antialiased min-h-screen bg-mist-900 text-foreground">
         {/* É aqui dentro do 'children' que a nossa página de Login vai ser injetada! */}
         {children}
       </body>

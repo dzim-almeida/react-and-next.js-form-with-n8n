@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginFormData } from "../schemas";
 import { authClient } from "@/src/core/auth/auth-client";
+import { redirect } from "next/navigation";
 
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -20,9 +21,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
+import ErrorBox from "./common/ErrorBox";
 
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [errorCode, setErrorCode] = useState("");
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -35,15 +38,15 @@ export function LoginForm() {
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
 
-    const { data: sessionData, error } = await authClient.signIn.email({
+    const { error } = await authClient.signIn.email({
       email: data.email,
       password: data.password,
     });
 
     if (error) {
-      alert("Login failed: " + error.message);
+      setErrorCode(error.code ?? "UNKNOWN_ERROR");
     } else {
-      alert("Login successful! Session data: " + JSON.stringify(sessionData));
+      redirect("/dashboard");
     }
     setIsLoading(false);
   };
@@ -57,6 +60,7 @@ export function LoginForm() {
         <CardDescription className="text-center">
           Digite seu e-mail e senha para acessar sua conta.
         </CardDescription>
+        {errorCode && <ErrorBox code={errorCode} />}
       </CardHeader>
       <CardContent>
         {/* Passamos as ferramentas do React Hook Form para o componente Form do Shadcn */}

@@ -21,7 +21,11 @@ import {
   FormField,
 } from "@/src/components/ui/form";
 
-export function RegisterForm() {
+interface RegisterFormProps {
+  handleTabForm: () => void;
+}
+
+export function RegisterForm({ handleTabForm }: RegisterFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<RegisterFormData>({
@@ -48,6 +52,7 @@ export function RegisterForm() {
       alert(
         "Registration successful! Session data: " + JSON.stringify(sessionData),
       );
+      handleTabForm();
     }
     setIsLoading(false);
   };

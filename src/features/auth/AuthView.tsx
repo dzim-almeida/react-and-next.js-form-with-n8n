@@ -16,7 +16,7 @@ export default function AuthView() {
 
     return (
         <Card className="w-full max-w-md mx-auto">
-            {tabForm === 'login' ? <LoginForm /> : <RegisterForm />}
+            {tabForm === 'login' ? <LoginForm /> : <RegisterForm handleTabForm={handleTabForm}/>}
             <CardFooter>
                 <button className="cursor-pointer hover:text-zinc-800" onClick={handleTabForm}>{tabForm === 'login' ? 'Faça uma conta' : 'Já tem uma conta?'}</button>
             </CardFooter>
